@@ -18,6 +18,14 @@ private class MatrixTest {
 		System.assertEquals(d, A.getElement(0, 1));
 	}
 
+	@isTest 
+	static void testSetAndRetrieveNonExistantValue() {
+		Matrix A = new Matrix(2, 2);
+		Double d = 12.34;
+		A.setElement(0, 1, d);
+		System.assertEquals(null, A.getElement(3, 3));
+	}	
+
 	@isTest
 	static void testInstantiateWithJSON() {
 		Matrix A = new Matrix(JSONString);

@@ -31,6 +31,14 @@ private class MatrixOperationsTest {
 	}
 
 	@isTest
+	static void testInvalidMultiply() {
+		Matrix A = new Matrix(1,1);
+		Matrix B = new Matrix(2,2);
+
+		System.assertEquals(null, MatrixOperations.multiply(A, B));
+	}
+
+	@isTest
 	static void testBasicTranspose() {
 		List<Double> row1 = new List<Double>{1,2};
 		List<Double> row2 = new List<Double>{3,4};
@@ -72,6 +80,14 @@ private class MatrixOperationsTest {
 	}
 
 	@isTest
+	static void testInvalidAddition() {
+		Matrix A = new Matrix(1,1);
+		Matrix B = new Matrix(2,2);
+
+		System.assertEquals(null, MatrixOperations.add(A, B));
+	}
+
+	@isTest
 	static void testSubtraction() {
 		Matrix A = new Matrix(JSONString);
 		Matrix B = new Matrix(JSONString);
@@ -89,6 +105,14 @@ private class MatrixOperationsTest {
 	}
 
 	@isTest
+	static void testInvalidSubtraction() {
+		Matrix A = new Matrix(1,1);
+		Matrix B = new Matrix(2,2);
+
+		System.assertEquals(null, MatrixOperations.subtract(A, B));
+	}
+
+	@isTest
 	static void testPointwiseMultiply() {
 		Matrix A = new Matrix(JSONString);
 		Matrix B = new Matrix(JSONString);
@@ -103,6 +127,28 @@ private class MatrixOperationsTest {
 				System.assertEquals(Math.pow(A.getElement(i, j), 2), C.getElement(i, j));
 			}
 		}
+	}
+
+	@isTest
+	static void testInvalidPointwiseMultiply() {
+		Matrix A = new Matrix(1,1);
+		Matrix B = new Matrix(2,2);
+
+		System.assertEquals(null, MatrixOperations.pointwiseMultiply(A, B));
+	}
+
+	@isTest
+	static void testPointwiseExponent() {
+		List<Double> vect = new List<Double>{1.0, 2.0};
+		List<Double> vect2 = new List<Double>{3.0, 4.0};
+		
+		Matrix A = new Matrix(new List<List<Double>>{vect, vect2});
+		Matrix B = MatrixOperations.pointwiseExponent(A, 2);
+
+		System.assertEquals(1.0, B.getElement(0, 0));
+		System.assertEquals(4.0, B.getElement(0, 1));
+		System.assertEquals(9.0, B.getElement(1, 0));
+		System.assertEquals(16.0, B.getElement(1, 1));
 	}
 	
 }

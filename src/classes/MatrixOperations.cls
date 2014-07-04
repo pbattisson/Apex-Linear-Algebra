@@ -83,4 +83,15 @@ public class MatrixOperations {
 
 		return C;
 	}
+
+	public static Matrix pointwiseExponent(Matrix A, Double exponent) {
+
+		for(Integer i = 0; i < A.rows; i++) {
+			for(Integer j = 0; j < A.columns; j++) {
+				A.setElement(i, j, Math.pow(A.getElement(i,j), exponent));
+			}
+		}
+
+		return A;
+	}
 }

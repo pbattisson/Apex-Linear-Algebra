@@ -65,4 +65,8 @@ public with sharing class Matrix
 			}
 		}
 	}
+
+	public void Print() {
+		System.debug(elements);
+	}
 }
