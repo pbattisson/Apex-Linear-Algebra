@@ -6,14 +6,17 @@ public class MatrixOperations {
 			return null;
 		}
 
-		Matrix C = new Matrix(A.rows, B.columns);
+		Integer A_rows = A.rows, A_cols = A.columns, B_cols = B.columns;
+
+		Matrix C = new Matrix(A_rows, B_cols);
 		C.zeros();
 
-		for(Integer i = 0; i < A.rows; i++) {
-			for(Integer j = 0; j < B.columns; j++) {
-				for(Integer k = 0; k < A.columns; k ++) {
+		for(Integer i = 0; i < A_rows; i++) {
+			List<Double> A_row = A.getRow(i);
+			for(Integer j = 0; j < B_cols; j++) {
+				for(Integer k = 0; k < A_cols; k++) {
 
-					C.setElement(i, j, C.getElement(i, j) + A.getElement(i, k)*B.getElement(k, j));
+					C.setElement(i, j, C.getElement(i, j) + A_row[k]*B.getElement(k, j));
 				}
 			}
 		}
@@ -22,10 +25,13 @@ public class MatrixOperations {
 	}
 
 	public static Matrix transpose(Matrix A) {
-		Matrix B = new Matrix(A.columns, A.rows);
-		for(Integer i = 0; i < A.rows; i++) {
-			for(Integer j = 0; j < A.columns; j++) {
-				B.setElement(j, i, A.getElement(i, j));
+		Integer A_rows = A.rows, A_cols = A.columns;
+
+		Matrix B = new Matrix(A_cols, A_rows);
+		for(Integer i = 0; i < A_rows; i++) {
+			List<Double> A_row = A.getRow(i);
+			for(Integer j = 0; j < A_cols; j++) {
+				B.setElement(j, i, A_row[j]);
 			}
 		}
 
@@ -38,12 +44,17 @@ public class MatrixOperations {
 			return null;
 		}
 
-		Matrix C = new Matrix(A.rows, A.columns);
+		Integer A_rows = A.rows, A_cols = A.columns, B_rows = B.rows, B_cols = B.columns;
 
-		for(Integer i = 0; i < A.rows; i++) {
-			for(Integer j = 0; j < A.columns; j ++) {
-				C.setElement(i, j, A.getElement(i,j) + B.getElement(i, j));
+		Matrix C = new Matrix(A_rows, A_cols);
+
+		for(Integer i = 0; i < A_rows; i++) {
+			List<Double> A_row = A.getRow(i), B_row = B.getRow(i), C_row = new Double[A_cols];
+			for(Integer j = 0; j < A_cols; j ++) {
+				C_row[j] = A_row[j] + B_row[j];
 			}
+
+			C.setRow(C_row, i);
 		}
 
 		return C;
@@ -55,12 +66,17 @@ public class MatrixOperations {
 			return null;
 		}
 
-		Matrix C = new Matrix(A.rows, A.columns);
+		Integer A_rows = A.rows, A_cols = A.columns, B_rows = B.rows, B_cols = B.columns;
 
-		for(Integer i = 0; i < A.rows; i++) {
-			for(Integer j = 0; j < A.columns; j ++) {
-				C.setElement(i, j, A.getElement(i,j) - B.getElement(i, j));
+		Matrix C = new Matrix(A_rows, A_cols);
+
+		for(Integer i = 0; i < A_rows; i++) {
+			List<Double> A_row = A.getRow(i), B_row = B.getRow(i), C_row = new Double[A_cols];
+			for(Integer j = 0; j < A_cols; j ++) {
+				C_row[j] = A_row[j] - B_row[j];
 			}
+
+			C.setRow(C_row, i);
 		}
 
 		return C;
@@ -72,13 +88,17 @@ public class MatrixOperations {
 			return null;
 		}
 
+		Integer A_rows = A.rows, A_cols = A.columns, B_rows = B.rows, B_cols = B.columns;
 
-		Matrix C = new Matrix(A.rows, A.columns);
+		Matrix C = new Matrix(A_rows, A_cols);
 
-		for(Integer i = 0; i < A.rows; i++) {
-			for(Integer j = 0; j < A.columns; j ++) {
-				C.setElement(i, j, A.getElement(i,j) * B.getElement(i, j));
+		for(Integer i = 0; i < A_rows; i++) {
+			List<Double> A_row = A.getRow(i), B_row = B.getRow(i), C_row = new Double[A_cols];
+			for(Integer j = 0; j < A_cols; j ++) {
+				C_row[j] = A_row[j] * B_row[j];
 			}
+
+			C.setRow(C_row, i);
 		}
 
 		return C;
@@ -86,10 +106,14 @@ public class MatrixOperations {
 
 	public static Matrix pointwiseExponent(Matrix A, Double exponent) {
 
-		for(Integer i = 0; i < A.rows; i++) {
-			for(Integer j = 0; j < A.columns; j++) {
-				A.setElement(i, j, Math.pow(A.getElement(i,j), exponent));
+		Integer A_rows = A.rows, A_cols = A.columns;
+
+		for(Integer i = 0; i < A_rows; i++) {
+			List<Double> A_row = A.getRow(i), A_row_exp = new Double[A_cols];
+			for(Integer j = 0; j < A_cols; j++) {
+				A_row_exp[j] = Math.pow(A_row[j], exponent);
 			}
+			A.setRow(A_row_exp, i);
 		}
 
 		return A;

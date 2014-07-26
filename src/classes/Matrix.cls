@@ -57,16 +57,42 @@ public with sharing class Matrix
 		return null;
 	}
 
+	public List<Double> getRow(Integer rowNum) {
+		return elements.get(rowNum);
+	}
+
+	public void setRow(List<Double> row, Integer rowNum) {
+		elements[rowNum] = row;
+	}
+
 	public void Zeros() {
-		Double zero = 0.0;
-		for(Integer i = 0; i < rows; i++) {
-			for(Integer j = 0; j < columns; j++) {
-				elements.get(i).set(j, zero);
-			}
-		}
+		fill(0);
 	}
 
 	public void Print() {
 		System.debug(elements);
+	}
+
+	public List<Double> getDataAsList() {
+		
+		List<Double> data = new List<Double>();
+
+		for(List<Double> row : elements) {
+			data.addAll(row);
+		}
+
+		return data;
+	}
+
+	public void fill(Double value) {
+		for(Integer i = 0; i < rows; i++) {
+			for(Integer j = 0; j < columns; j++) {
+				elements.get(i).set(j, value);
+			}
+		}
+	}
+
+	public String to_json() {
+		return JSON.serialize(elements);
 	}
 }
